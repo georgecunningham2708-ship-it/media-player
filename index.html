@@ -15,10 +15,13 @@
     font-family: Arial, sans-serif;
     font-size: 42px;
     overflow: hidden;
+    position: relative;
   }
 
   #text {
     opacity: 0;
+    z-index: 10;
+    position: relative;
   }
 
   /* red flash overlay */
@@ -31,6 +34,34 @@
     background: red;
     opacity: 0;
     pointer-events: none;
+    z-index: 20;
+  }
+
+  .eye {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px red, 0 0 20px red;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: blink 3s infinite;
+  }
+
+  .pupil {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    top: 10px;
+    left: 10px;
+  }
+
+  @keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
   }
 </style>
 </head>
@@ -66,6 +97,27 @@
       flash.style.opacity = "0";
     }, 120);
   });
+
+  // Add analog horror eyes
+  function createEyes(num) {
+    for(let i = 0; i < num; i++){
+      const eye = document.createElement("div");
+      eye.classList.add("eye");
+
+      const pupil = document.createElement("div");
+      pupil.classList.add("pupil");
+      eye.appendChild(pupil);
+
+      // Random position
+      eye.style.top = Math.random() * window.innerHeight + "px";
+      eye.style.left = Math.random() * window.innerWidth + "px";
+
+      document.body.appendChild(eye);
+    }
+  }
+
+  // Spawn 20 eyes on page load
+  createEyes(20);
 </script>
 
 </body>
