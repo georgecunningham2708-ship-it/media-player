@@ -24,7 +24,6 @@
     position: relative;
   }
 
-  /* red flash overlay */
   #flash {
     position: fixed;
     top: 0;
@@ -39,11 +38,24 @@
 
   .eye {
     position: absolute;
-    width: 60px; /* size of the analog horror eye */
+    width: 60px; /* adjust size as needed */
     height: 60px;
-    pointer-events: none;
-    opacity: 0.8;
-    transition: transform 0.1s;
+    border-radius: 50%;
+    background-color: black;
+    border: 2px solid #555;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+  }
+
+  .eye::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    top: 18px;
+    left: 18px;
+    box-shadow: 18px 0 0 white; /* second reflection dot */
   }
 </style>
 </head>
@@ -80,11 +92,10 @@
     }, 120);
   });
 
-  // Add analog horror eyes
+  // Create analog horror eyes
   function createEyes(num) {
     for(let i = 0; i < num; i++){
-      const eye = document.createElement("img");
-      eye.src = "/mnt/data/f3f76eb9-8d15-4b4d-8fc1-4903fad7a654.png"; // your uploaded eye
+      const eye = document.createElement("div");
       eye.classList.add("eye");
 
       // Random position
@@ -95,8 +106,7 @@
     }
   }
 
-  // Spawn 20 eyes on page load
-  createEyes(20);
+  createEyes(20); // spawn 20 eyes
 </script>
 
 </body>
